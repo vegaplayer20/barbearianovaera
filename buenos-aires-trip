@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buenos Aires Trip — Viagem entre amigas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3EC;
+    --cream-2:#F5E9DF;
+    --terracotta:#B5614A;
+    --terracotta-dark:#8C4736;
+    --pink-soft:#F3D9CE;
+    --ink:#2B2420;
+    --muted:#8A7A70;
+    --line:#E9DAD0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+  }
+  h1,h2,.serif{font-family:'Playfair Display',serif;}
+  em{font-style:italic;color:var(--terracotta);}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  @media(max-width:768px){.wrap{padding:0 22px;}}
+  .eyebrow{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--terracotta);font-weight:500;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:14px 28px;
+    border-radius:30px;font-size:14px;font-weight:500;transition:all .25s ease;cursor:pointer;
+  }
+  .btn-primary{background:var(--terracotta);color:#fff;}
+  .btn-primary:hover{background:var(--terracotta-dark);transform:translateY(-1px);}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(251,243,236,0.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:18px 0;}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Playfair Display';font-size:22px;color:var(--terracotta-dark);display:flex;align-items:center;gap:6px;}
+  .nav-links{display:flex;gap:30px;list-style:none;}
+  .nav-links a{font-size:13.5px;color:var(--ink);opacity:.8;transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;color:var(--terracotta);}
+  @media(max-width:860px){.nav-links{display:none;}}
+
+  /* HERO */
+  .hero-img{
+    position:relative;height:560px;border-radius:0;overflow:hidden;
+    background:
+      linear-gradient(to top, rgba(20,12,8,0.78) 0%, rgba(20,12,8,0.35) 45%, rgba(20,12,8,0.15) 100%),
+      linear-gradient(120deg, #6b4a3a 0%, #b07a55 40%, #e8b98a 70%, #f3d9b8 100%);
+  }
+  .hero-img::after{
+    content:'';position:absolute;inset:0;
+    background-image:
+      linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 60px 100%;
+    opacity:.4;
+  }
+  .hero-content{position:absolute;left:0;bottom:0;padding:50px 0 60px;width:100%;color:#fff;}
+  .hero-tag{
+    display:inline-block;background:rgba(255,255,255,0.15);backdrop-filter:blur(6px);
+    padding:6px 16px;border-radius:20px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;
+  }
+  .hero-content h1{font-size:58px;line-height:1.05;font-weight:700;margin-bottom:18px;}
+  .hero-date{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:14px;opacity:.95;}
+  .hero-content p.lead{font-size:14.5px;line-height:1.75;max-width:420px;opacity:.9;margin-bottom:30px;}
+
+  /* STATS BAR */
+  .stats-bar{
+    background:#fff;border-radius:16px;margin-top:-40px;position:relative;z-index:5;
+    box-shadow:0 20px 50px rgba(60,30,15,0.08);
+    display:grid;grid-template-columns:repeat(4,1fr);
+  }
+  .stat{display:flex;align-items:center;gap:14px;padding:28px 24px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat-icon{font-size:20px;color:var(--terracotta);}
+  .stat b{display:block;font-size:14px;}
+  .stat span{font-size:11.5px;color:var(--muted);}
+  @media(max-width:860px){.stats-bar{grid-template-columns:1fr 1fr;}.stat{border-right:none;border-bottom:1px solid var(--line);}}
+
+  section{padding:90px 0;}
+  .sec-head{margin-bottom:48px;}
+  .sec-head h2{font-size:34px;margin-top:8px;}
+
+  /* TIMELINE */
+  .timeline{display:flex;flex-direction:column;gap:22px;position:relative;}
+  .tl-row{display:grid;grid-template-columns:90px 1fr;gap:24px;align-items:stretch;}
+  .tl-date{
+    background:var(--pink-soft);border-radius:14px;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;padding:14px 0;text-align:center;
+  }
+  .tl-date .dow{font-size:10px;letter-spacing:0.1em;color:var(--terracotta-dark);text-transform:uppercase;}
+  .tl-date .day{font-family:'Playfair Display';font-size:26px;font-weight:700;color:var(--terracotta-dark);line-height:1.1;}
+  .tl-date .mon{font-size:9px;letter-spacing:0.1em;color:var(--terracotta-dark);text-transform:uppercase;}
+  .tl-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 26px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  .tl-left{display:flex;align-items:center;gap:18px;}
+  .tl-icon{
+    width:52px;height:52px;border-radius:50%;background:var(--pink-soft);
+    display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+  }
+  .tl-time{font-size:11.5px;color:var(--terracotta);font-weight:500;margin-bottom:3px;}
+  .tl-title{font-size:17px;font-weight:500;margin-bottom:4px;}
+  .tl-desc{font-size:12.5px;color:var(--muted);line-height:1.5;max-width:340px;}
+  .tl-right{text-align:right;}
+  .tl-tag{display:block;font-size:11px;color:var(--terracotta);margin-top:6px;}
+
+  /* CONFIRMED */
+  .confirm-box{background:#fff;border-radius:20px;padding:44px;border:1px solid var(--line);}
+  .confirm-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px;margin-bottom:36px;}
+  .countdown{display:flex;gap:10px;}
+  .cd-item{background:var(--cream-2);border-radius:10px;padding:10px 16px;text-align:center;min-width:62px;}
+  .cd-item b{display:block;font-family:'Playfair Display';font-size:20px;color:var(--terracotta-dark);}
+  .cd-item span{font-size:9.5px;text-transform:uppercase;color:var(--muted);letter-spacing:.05em;}
+  .avatars{display:flex;gap:24px;flex-wrap:wrap;}
+  .avatar-item{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .avatar-circle{
+    width:62px;height:62px;border-radius:50%;background:linear-gradient(150deg,#d9a37a,#8c5a3f);
+    border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  .avatar-circle.more{background:var(--cream-2);display:flex;align-items:center;justify-content:center;
+    color:var(--terracotta-dark);font-size:12px;font-weight:500;}
+  .avatar-item span{font-size:11.5px;color:var(--muted);}
+
+  /* PAYMENT */
+  .pay-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:24px;align-items:stretch;}
+  .pay-options{display:flex;flex-direction:column;gap:14px;}
+  .pay-option{
+    border:1.5px solid var(--line);border-radius:14px;padding:18px 22px;display:flex;align-items:center;gap:16px;
+    cursor:pointer;transition:all .2s;
+  }
+  .pay-option.active{border-color:var(--terracotta);background:#fff;}
+  .pay-icon{font-size:20px;color:var(--terracotta);}
+  .pay-option b{display:block;font-size:14px;}
+  .pay-option span{font-size:11.5px;color:var(--muted);}
+  .pix-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px;
+    display:grid;grid-template-columns:1.3fr auto;gap:24px;align-items:center;}
+  .pix-amount{font-family:'Playfair Display';font-size:30px;font-weight:700;color:var(--terracotta-dark);margin:10px 0;}
+  .pix-key{
+    background:var(--cream-2);border-radius:8px;padding:10px 14px;font-size:12.5px;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;
+  }
+  .qr-box{width:110px;height:110px;border-radius:10px;
+    background:repeating-conic-gradient(#2B2420 0% 25%, #fff 0% 50%) 0 0/16px 16px,#fff;}
+  @media(max-width:860px){.pay-grid{grid-template-columns:1fr;}.pix-card{grid-template-columns:1fr;}}
+
+  /* FOOTER */
+  footer{background:var(--terracotta-dark);color:#fff;padding:60px 0 24px;margin-top:40px;}
+  .footer-grid{display:grid;grid-template-columns:1fr 1.4fr 1.4fr;gap:36px;align-items:center;margin-bottom:30px;}
+  .footer-grid h3{font-family:'Playfair Display';font-style:italic;font-size:20px;}
+  .footer-grid p, .footer-grid a{font-size:13px;opacity:.85;display:block;margin-top:6px;}
+  .footer-bottom{text-align:center;font-size:11.5px;opacity:.6;padding-top:24px;border-top:1px solid rgba(255,255,255,0.15);}
+  @media(max-width:860px){.footer-grid{grid-template-columns:1fr;text-align:left;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="logo">Buenos Aires <em>Trip</em> ✈</div>
+    <ul class="nav-links">
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#cronograma">Cronograma</a></li>
+      <li><a href="#confirmadas">Confirmadas</a></li>
+      <li><a href="#pagamento">Pagamento</a></li>
+      <li><a href="#duvidas">Dúvidas</a></li>
+    </ul>
+    <a href="#confirmar" class="btn btn-primary">Confirmar Presença</a>
+  </div>
+</nav>
+
+<section id="inicio" style="padding:0;">
+  <div class="hero-img">
+    <div class="wrap hero-content">
+      <span class="hero-tag">Viagem entre amigas ♡</span>
+      <h1>BUENOS<br>AIRES <em>Trip</em> ♡</h1>
+      <div class="hero-date">📅 20 a 25 de Maio de 2026</div>
+      <p class="lead">Seis dias para criar memórias inesquecíveis entre boas risadas, compras, passeios e muita cultura em Buenos Aires.</p>
+      <a href="#confirmar" class="btn btn-primary">Confirmar Presença ♡</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-icon">📆</span><div><b>6 Dias</b><span>de experiências</span></div></div>
+      <div class="stat"><span class="stat-icon">📍</span><div><b>1 Destino</b><span>inesquecível</span></div></div>
+      <div class="stat"><span class="stat-icon">👯</span><div><b>Melhores amigas</b><span>momentos únicos</span></div></div>
+      <div class="stat"><span class="stat-icon">💬</span><div><b>Mil histórias</b><span>para contar</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="cronograma">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Cronograma da viagem ♡</span>
+      <h2>Nosso roteiro <em>dia a dia</em></h2>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-row">
+        <div class="tl-date"><span class="dow">Ter</span><span class="day">20</span><span class="mon">Mai</span></div>
+        <div class="tl-card">
+          <div class="tl-left">
+            <div class="tl-icon">✈️</div>
+            <div>
+              <div class="tl-time">14:00</div>
+              <div class="tl-title">Chegada em Buenos Aires</div>
+              <div class="tl-desc">Transfer para o hotel e check-in. Tarde livre para descansar e explorar os arredores.</div>
+            </div>
+          </div>
+          <div class="tl-right"><a href="#" class="btn btn-primary" style="padding:10px 22px;font-size:12.5px;">Inscrever-se</a><span class="tl-tag">Opcional</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-date"><span class="dow">Qua</span><span class="day">21</span><span class="mon">Mai</span></div>
+        <div class="tl-card">
+          <div class="tl-left">
+            <div class="tl-icon">🏛️</div>
+            <div>
+              <div class="tl-time">10:00</div>
+              <div class="tl-title">City Tour + Recoleta</div>
+              <div class="tl-desc">Passeio panorâmico pelos principais pontos turísticos. Tarde livre para museus e cafés.</div>
+            </div>
+          </div>
+          <div class="tl-right"><a href="#" class="btn btn-primary" style="padding:10px 22px;font-size:12.5px;">Inscrever-se</a><span class="tl-tag">Opcional</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-date"><span class="dow">Qui</span><span class="day">22</span><span class="mon">Mai</span></div>
+        <div class="tl-card">
+          <div class="tl-left">
+            <div class="tl-icon">🛍️</div>
+            <div>
+              <div class="tl-time">10:30</div>
+              <div class="tl-title">Compras em Palermo</div>
+              <div class="tl-desc">Dia de compras na rua Florida! Vamos aproveitar as melhores lojas e outlets da cidade.</div>
+            </div>
+          </div>
+          <div class="tl-right"><a href="#" class="btn btn-primary" style="padding:10px 22px;font-size:12.5px;">Inscrever-se</a><span class="tl-tag">Opcional</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-date"><span class="dow">Sex</span><span class="day">23</span><span class="mon">Mai</span></div>
+        <div class="tl-card">
+          <div class="tl-left">
+            <div class="tl-icon">💃</div>
+            <div>
+              <div class="tl-time">20:30</div>
+              <div class="tl-title">Jantar + Show de Tango</div>
+              <div class="tl-desc">Noite especial com jantar delicioso e show de tango em uma casa típica portenha.</div>
+            </div>
+          </div>
+          <div class="tl-right"><a href="#" class="btn btn-primary" style="padding:10px 22px;font-size:12.5px;">Inscrever-se</a><span class="tl-tag" style="color:var(--terracotta-dark);font-weight:500;">Vagas limitadas</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-date"><span class="dow">Sáb</span><span class="day">24</span><span class="mon">Mai</span></div>
+        <div class="tl-card">
+          <div class="tl-left">
+            <div class="tl-icon">☕</div>
+            <div>
+              <div class="tl-time">11:00</div>
+              <div class="tl-title">Brunch & Feira de San Telmo</div>
+              <div class="tl-desc">Manhã livre e à tarde vamos conhecer a famosa feira de San Telmo.</div>
+            </div>
+          </div>
+          <div class="tl-right"><a href="#" class="btn btn-primary" style="padding:10px 22px;font-size:12.5px;">Inscrever-se</a><span class="tl-tag">Opcional</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-date"><span class="dow">Dom</span><span class="day">25</span><span class="mon">Mai</span></div>
+        <div class="tl-card">
+          <div class="tl-left">
+            <div class="tl-icon">🧳</div>
+            <div>
+              <div class="tl-time">12:00</div>
+              <div class="tl-title">Check-out e Despedidas</div>
+              <div class="tl-desc">Manhã livre e retorno para casa com o coração cheio de lembranças.</div>
+            </div>
+          </div>
+          <div class="tl-right"><a href="#" class="btn btn-primary" style="padding:10px 22px;font-size:12.5px;">Inscrever-se</a><span class="tl-tag">Opcional</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="confirmadas">
+  <div class="wrap">
+    <div class="confirm-box">
+      <div class="confirm-top">
+        <div>
+          <span class="eyebrow">Quem já confirmou ♡</span>
+          <h2 style="font-size:28px;margin-top:8px;">Confirmadas</h2>
+          <p style="font-size:13px;color:var(--muted);margin-top:6px;">Contagem regressiva para dias incríveis!</p>
+        </div>
+        <div class="countdown">
+          <div class="cd-item"><b>29</b><span>Dias</span></div>
+          <div class="cd-item"><b>14</b><span>Horas</span></div>
+          <div class="cd-item"><b>36</b><span>Min</span></div>
+          <div class="cd-item"><b>42</b><span>Seg</span></div>
+        </div>
+      </div>
+      <div class="avatars">
+        <div class="avatar-item"><div class="avatar-circle"></div><span>Você</span></div>
+        <div class="avatar-item"><div class="avatar-circle"></div><span>Mariana S.</span></div>
+        <div class="avatar-item"><div class="avatar-circle"></div><span>Juliana R.</span></div>
+        <div class="avatar-item"><div class="avatar-circle"></div><span>Camila A.</span></div>
+        <div class="avatar-item"><div class="avatar-circle"></div><span>Fernanda L.</span></div>
+        <div class="avatar-item"><div class="avatar-circle"></div><span>Beatriz M.</span></div>
+        <div class="avatar-item"><div class="avatar-circle more">+3</div><span>Mais amigas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pagamento">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Investimento ♡</span>
+      <h2>Pagamento</h2>
+      <p style="font-size:13.5px;color:var(--muted);margin-top:8px;">Garanta sua vaga com tranquilidade. Escolha a forma que preferir!</p>
+    </div>
+    <div class="pay-grid">
+      <div class="pay-options">
+        <div class="pay-option active">
+          <span class="pay-icon">💠</span>
+          <div><b>Pix</b><span>Aprovação imediata</span></div>
+        </div>
+        <div class="pay-option">
+          <span class="pay-icon">💳</span>
+          <div><b>Cartão de Crédito</b><span>Até 12x com juros</span></div>
+        </div>
+      </div>
+      <div class="pix-card">
+        <div>
+          <span class="eyebrow">Pague com Pix</span>
+          <p style="font-size:12.5px;color:var(--muted);margin-top:6px;">Escaneie o QR Code ao lado ou copie o código Pix.</p>
+          <div class="pix-amount">R$ 2.890,00</div>
+          <div style="font-size:11px;color:var(--muted);">Chave Pix (Copia e Cola)</div>
+          <div class="pix-key"><span>viagemamigas@trip.com.br</span><span>📋</span></div>
+        </div>
+        <div class="qr-box"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="duvidas">
+  <div class="wrap footer-grid">
+    <div>
+      <h3>Buenos Aires Trip</h3>
+    </div>
+    <div>
+      <span class="eyebrow" style="color:#fff;opacity:.7;">Contato do grupo</span>
+      <p>Dúvidas? Fale com a gente!</p>
+      <a href="https://wa.me/5511999999999">📱 (11) 99999-9999</a>
+      <a href="#">📷 @buenosairestrip</a>
+    </div>
+    <div>
+      <p style="font-style:italic;font-family:'Playfair Display';font-size:18px;">Não é só uma viagem, é sobre quem está com você. ♡</p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">BUENOS AIRES TRIP © 2026 · TODOS OS DIREITOS RESERVADOS</div>
+</footer>
+
+</body>
+</html>
