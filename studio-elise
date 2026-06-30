@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Élise — Atelier de Beleza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#0c0a08;
+    --bg-1:#161310;
+    --bg-2:#1f1b16;
+    --gold:#c79a5f;
+    --gold-soft:rgba(199,154,95,0.16);
+    --text-1:#f3ede4;
+    --text-2:#a89e91;
+    --line:rgba(243,237,228,0.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-0);
+    color:var(--text-1);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:500;}
+  em{font-style:italic;color:var(--gold);}
+  a{text-decoration:none;color:inherit;}
+  .eyebrow{
+    font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;
+  }
+  .wrap{max-width:1200px;margin:0 auto;padding:0 40px;}
+  @media(max-width:768px){.wrap{padding:0 22px;}}
+
+  /* NAVBAR */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:26px 0;transition:all .4s ease;
+    background:transparent;
+  }
+  nav.scrolled{
+    background:rgba(12,10,8,0.85);
+    backdrop-filter:blur(14px);
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-size:24px;letter-spacing:0.02em;}
+  .logo-sub{display:block;font-family:'Jost';font-size:9px;letter-spacing:0.3em;color:var(--text-2);font-weight:400;margin-top:2px;}
+  .nav-links{display:flex;gap:38px;list-style:none;}
+  .nav-links a{
+    font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
+    position:relative;padding-bottom:4px;color:var(--text-2);
+    transition:color .3s;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+    background:var(--gold);transition:width .3s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{color:var(--text-1);}
+  .nav-links a:hover::after, .nav-links a.active::after{width:100%;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 26px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+    border-radius:3px;transition:all .3s ease;cursor:pointer;border:1px solid transparent;
+  }
+  .btn-gold{background:var(--gold);color:var(--bg-0);font-weight:500;}
+  .btn-gold:hover{background:#dba968;transform:translateY(-1px);}
+  .btn-outline{border-color:rgba(243,237,228,0.25);color:var(--text-1);}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* SIDE SOCIAL */
+  .side-social{
+    position:fixed;left:40px;bottom:40px;z-index:50;
+    display:flex;flex-direction:column;gap:18px;
+  }
+  .side-social a{
+    width:36px;height:36px;border:1px solid var(--line);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-2);transition:all .3s;
+  }
+  .side-social a:hover{border-color:var(--gold);color:var(--gold);}
+  @media(max-width:900px){.side-social{display:none;}}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;position:relative;
+    padding-top:90px;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(199,154,95,0.06), transparent),
+      var(--bg-0);
+  }
+  .hero-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:50px;align-items:center;width:100%;}
+  .hero-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:26px;}
+  .hero-eyebrow::after{content:'✦';color:var(--gold);font-size:10px;}
+  .hero h1{font-size:54px;line-height:1.12;letter-spacing:-0.01em;margin-bottom:24px;color:var(--text-1);}
+  .hero p.lead{font-size:15px;line-height:1.8;color:var(--text-2);max-width:380px;margin-bottom:38px;font-weight:300;}
+  .hero-ctas{display:flex;gap:14px;margin-bottom:60px;}
+  .hero-visual{
+    position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/5;
+    background:
+      linear-gradient(160deg, #2a221a 0%, #1a140f 60%, #0c0a08 100%);
+  }
+  .hero-visual::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 70% 25%, rgba(255,210,150,0.18), transparent 45%),
+      repeating-linear-gradient(115deg, rgba(0,0,0,0.06) 0 2px, transparent 2px 5px);
+  }
+  .hero-visual .ring{
+    position:absolute;top:8%;right:10%;width:120px;height:120px;
+    border-radius:50%;border:14px solid rgba(255,235,210,0.85);
+    filter:blur(1px);box-shadow:0 0 40px rgba(255,210,150,0.4);
+  }
+  .hero-figure{
+    position:absolute;bottom:0;right:6%;width:62%;height:88%;
+    background:linear-gradient(200deg,#5a3f2c, #2c1f16 70%);
+    border-radius:50% 50% 30% 30% / 60% 60% 20% 20%;
+    opacity:0.9;
+  }
+  .scroll-cue{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-2);
+  }
+  .scroll-cue .line{width:1px;height:30px;background:linear-gradient(var(--gold),transparent);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  section{padding:130px 0;position:relative;}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;gap:30px;flex-wrap:wrap;}
+  .sec-head h2{font-size:38px;line-height:1.2;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .service-card{
+    background:var(--bg-0);padding:46px 36px;transition:background .35s ease;
+    position:relative;
+  }
+  .service-card:hover{background:var(--bg-1);}
+  .service-icon{
+    width:54px;height:54px;border-radius:50%;background:var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;margin-bottom:28px;
+    color:var(--gold);font-size:20px;
+  }
+  .service-card h3{font-size:22px;margin-bottom:10px;font-weight:500;}
+  .service-link{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-2);
+    display:inline-flex;align-items:center;gap:6px;margin-top:18px;transition:color .3s,gap .3s;}
+  .service-card:hover .service-link{color:var(--gold);gap:10px;}
+  @media(max-width:860px){.services-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.services-grid{grid-template-columns:1fr;}}
+
+  /* TRANSFORMATIONS */
+  .ba-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .ba-card{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/5;
+    background:linear-gradient(150deg,#3a2c1f,#171210);}
+  .ba-tag{position:absolute;top:16px;font-size:10px;letter-spacing:0.15em;color:#fff;text-transform:uppercase;z-index:2;}
+  .ba-tag.before{left:16px;} .ba-tag.after{right:16px;}
+  .ba-divider{position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,0.5);
+    display:flex;align-items:center;justify-content:center;}
+  .ba-divider span{
+    width:26px;height:26px;border-radius:50%;background:#fff;color:#111;
+    display:flex;align-items:center;justify-content:center;font-size:11px;
+  }
+  @media(max-width:860px){.ba-row{grid-template-columns:1fr;}}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+  .about-imgs{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;}
+  .about-imgs .img-a{aspect-ratio:3/4;background:linear-gradient(160deg,#241c14,#0c0a08);border-radius:4px;align-self:end;}
+  .about-imgs .img-b{aspect-ratio:3/4.6;background:linear-gradient(200deg,#4a3526,#1a130d);border-radius:4px;}
+  .about-text .name-script{font-family:'Cormorant Garamond';font-style:italic;font-size:22px;color:var(--gold);margin-top:26px;}
+  .about-text h2{font-size:36px;margin:14px 0 20px;}
+  .about-text p{color:var(--text-2);line-height:1.85;font-size:14.5px;margin-bottom:30px;max-width:430px;}
+  .metrics{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+  .metric{display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--bg-1);}
+  .metric .num{font-family:'Cormorant Garamond';font-size:28px;color:var(--gold);}
+  .metric .label{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-2);line-height:1.4;}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr;}.about-imgs{order:2;}}
+
+  /* TESTIMONIALS + INSTAGRAM */
+  .lower-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;}
+  .quote-mark{font-family:'Cormorant Garamond';font-size:54px;color:var(--gold);line-height:1;margin-bottom:10px;}
+  .testimonial p{font-size:17px;line-height:1.7;font-family:'Cormorant Garamond';font-weight:400;margin-bottom:18px;}
+  .stars{color:var(--gold);font-size:13px;letter-spacing:3px;margin-bottom:10px;}
+  .insta-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:24px;}
+  .insta-grid div{aspect-ratio:1;background:linear-gradient(150deg,#3a2c1f,#161210);border-radius:3px;}
+  @media(max-width:860px){.lower-grid{grid-template-columns:1fr;}.insta-grid{grid-template-columns:repeat(3,1fr);}}
+
+  /* CTA BAND */
+  .cta-band{
+    background:linear-gradient(120deg, #1a1310, #0c0a08 60%);
+    padding:80px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .cta-band h2{font-size:32px;}
+
+  /* FOOTER */
+  footer{padding:80px 0 30px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:60px;}
+  .footer-grid p{color:var(--text-2);font-size:13px;line-height:1.7;margin-top:14px;max-width:230px;}
+  .footer-col h4{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-2);margin-bottom:18px;}
+  .footer-col a, .footer-col li{display:block;font-size:13.5px;color:var(--text-1);margin-bottom:10px;list-style:none;opacity:0.85;}
+  .footer-col a:hover{color:var(--gold);}
+  .footer-bottom{display:flex;justify-content:space-between;padding-top:30px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--text-2);flex-wrap:wrap;gap:10px;}
+  @media(max-width:860px){.footer-grid{grid-template-columns:1fr 1fr;}}
+
+  .wa-float{
+    position:fixed;bottom:28px;right:28px;z-index:90;
+    width:56px;height:56px;border-radius:50%;background:#25D366;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .3s;
+  }
+  .wa-float:hover{transform:scale(1.08);}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <div class="logo">Studio <em>Élise</em><span class="logo-sub">ATELIER DE BELEZA</span></div>
+    <ul class="nav-links">
+      <li><a href="#inicio" class="active">Início</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#transformacoes">Transformações</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#depoimentos">Depoimentos</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a href="#contato" class="btn btn-gold">📅 Agendar Agora</a>
+  </div>
+</nav>
+
+<div class="side-social">
+  <a href="#" aria-label="Instagram">IG</a>
+  <a href="#" aria-label="WhatsApp">WA</a>
+  <a href="#" aria-label="Localização">📍</a>
+</div>
+
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="hero-eyebrow eyebrow">Atelier de beleza desde 2016</div>
+      <h1>Sua beleza,<br>em sua forma mais<br><em>refinada.</em></h1>
+      <p class="lead">Um espaço onde a técnica encontra a sensibilidade — cuidado capilar e estética pensados nos mínimos detalhes, no ritmo da sua rotina.</p>
+      <div class="hero-ctas">
+        <a href="#contato" class="btn btn-gold">📅 Agendar Agora</a>
+        <a href="#servicos" class="btn btn-outline">Conhecer Serviços ↗</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="ring"></div>
+      <div class="hero-figure"></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>↓</span><span class="line"></span><span>Descubra mais</span></div>
+</section>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px;">Nossos serviços</div>
+        <h2>Experiências que <em>transformam</em></h2>
+      </div>
+      <a href="#" class="btn btn-outline">Ver Todos Serviços +</a>
+    </div>
+  </div>
+  <div class="wrap reveal">
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">✂</div>
+        <h3>Cortes Femininos</h3>
+        <span class="service-link">Saiba mais →</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💧</div>
+        <h3>Coloração & Luzes</h3>
+        <span class="service-link">Saiba mais →</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✦</div>
+        <h3>Tratamentos Capilares</h3>
+        <span class="service-link">Saiba mais →</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">〰</div>
+        <h3>Alisamentos & Redução de Volume</h3>
+        <span class="service-link">Saiba mais →</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◍</div>
+        <h3>Estética Facial</h3>
+        <span class="service-link">Saiba mais →</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧴</div>
+        <h3>Produtos Premium</h3>
+        <span class="service-link">Saiba mais →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="transformacoes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px;">Transformações reais</div>
+        <h2>Resultados que falam <em>por si</em></h2>
+      </div>
+    </div>
+    <div class="ba-row reveal">
+      <div class="ba-card"><span class="ba-tag before">Antes</span><span class="ba-tag after">Depois</span><div class="ba-divider"><span>⇆</span></div></div>
+      <div class="ba-card"><span class="ba-tag before">Antes</span><span class="ba-tag after">Depois</span><div class="ba-divider"><span>⇆</span></div></div>
+      <div class="ba-card"><span class="ba-tag before">Antes</span><span class="ba-tag after">Depois</span><div class="ba-divider"><span>⇆</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="wrap about-grid reveal">
+    <div class="about-imgs">
+      <div class="img-a"></div>
+      <div class="img-b"></div>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow">Sobre o Studio Élise</div>
+      <h2>Mais que beleza,<br>é sobre <em>autoestima.</em></h2>
+      <p>Desde 2016, nossa missão é revelar o melhor de cada mulher com técnica exclusiva e um atendimento verdadeiramente personalizado.</p>
+      <div class="name-script">Élise Martins</div>
+      <div class="eyebrow" style="font-size:10px;">Fundadora</div>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:50px;">
+    <div class="metrics reveal" style="display:grid;grid-template-columns:repeat(3,1fr);">
+      <div class="metric"><span class="num">8+</span><span class="label">Anos de<br>Experiência</span></div>
+      <div class="metric"><span class="num">2000+</span><span class="label">Clientes<br>Atendidas</span></div>
+      <div class="metric"><span class="num">5.0</span><span class="label">Avaliação<br>Média</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="depoimentos">
+  <div class="wrap lower-grid">
+    <div class="testimonial reveal">
+      <div class="eyebrow" style="margin-bottom:18px;">Depoimentos</div>
+      <div class="quote-mark">"</div>
+      <p>O Studio Élise mudou completamente meu cabelo e minha autoestima. Atendimento impecável e resultado surpreendente!</p>
+      <div class="stars">★★★★★</div>
+      <div style="font-size:13px;color:var(--text-2);">Mariana Oliveira</div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow" style="margin-bottom:8px;">No Instagram</div>
+      <h2 style="font-size:26px;margin-bottom:6px;">Acompanhe nosso trabalho</h2>
+      <div class="insta-grid">
+        <div></div><div></div><div></div><div></div><div></div>
+      </div>
+      <a href="#" class="btn btn-outline" style="margin-top:20px;">📷 @studioelise</a>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band" id="contato-band">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;width:100%;">
+    <h2>Sua <em>transformação</em> começa aqui.</h2>
+    <a href="#contato" class="btn btn-gold">📅 Agendar Agora</a>
+  </div>
+</div>
+
+<footer id="contato">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo">Studio <em>Élise</em><span class="logo-sub">ATELIER DE BELEZA</span></div>
+        <p>Beleza, técnica e cuidado em cada detalhe.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <a href="#inicio">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#transformacoes">Transformações</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#depoimentos">Depoimentos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href="tel:+5511999999999">(11) 99999-9999</a>
+        <a href="mailto:contato@studioelise.com.br">contato@studioelise.com.br</a>
+        <a href="#">Rua das Flores, 123 — Jardins/SP</a>
+      </div>
+      <div class="footer-col">
+        <h4>Horário</h4>
+        <li>Seg – Sex: 9h às 19h</li>
+        <li>Sáb: 8h às 17h</li>
+        <a href="https://wa.me/5511999999999" class="btn btn-outline" style="margin-top:8px;display:inline-flex;">📅 Agendar Agora</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Studio Élise. Todos os direitos reservados.</span>
+      <span>Desenvolvido com ♥</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5500000000000" class="wa-float" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4a8.94 8.94 0 00-7.74 13.4L3 21l3.7-1.27a8.93 8.93 0 004.32 1.1h.01a8.94 8.94 0 008.92-8.94 8.86 8.86 0 00-2.35-6.27zM12.05 19.4a7.4 7.4 0 01-3.8-1.04l-.27-.16-2.83.97.95-2.76-.18-.28a7.43 7.43 0 1113.78-3.9 7.43 7.43 0 01-7.65 7.17zm4.07-5.56c-.22-.11-1.3-.64-1.5-.72-.2-.07-.35-.11-.5.11-.14.22-.57.72-.7.87-.13.14-.26.16-.48.05-.22-.11-.93-.34-1.78-1.1-.66-.58-1.1-1.31-1.23-1.53-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.14-.22.22-.37.07-.14.04-.27-.02-.38-.07-.11-.5-1.2-.68-1.65-.18-.43-.36-.37-.5-.38h-.43c-.14 0-.38.05-.58.27-.2.22-.76.74-.76 1.8s.78 2.09.89 2.23c.11.14 1.53 2.34 3.71 3.28.52.22.92.36 1.24.46.52.16 1 .14 1.37.09.42-.06 1.3-.53 1.48-1.04.18-.51.18-.95.13-1.04-.05-.1-.2-.16-.42-.27z"/></svg>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
